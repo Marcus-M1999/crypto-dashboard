@@ -7,7 +7,7 @@ import altair as alt
 import streamlit.components.v1 as components
 from PIL import Image
 
-
+# NOTE: We MUST consolidate all the dataframes into one big 
 
 
 # loads in datasets, filepath is loc of file, token is capped at 3 letters
@@ -17,6 +17,12 @@ usd = pd.read_csv("ADA-USD.csv")
 day_signals = pd.read_csv("data_for_viz_project.csv")
 img = Image.open("cryptoreview_logo.jpg")
 ADA_data = pd.read_csv("ADA-USD.csv")
+
+st.set_page_config(
+     page_title='Crypto Dashboard',
+     layout="wide",
+     initial_sidebar_state="expanded", # 
+)
 
 def pre_processing(df, token, long):
     if long:
@@ -76,24 +82,28 @@ for i, df in enumerate(dfs):
 st.title("Crypto Dashboard")
 st.subheader("Mickey Piekarski, Varun Dashora, Noor Gill, Marcus Manos")
 
-st.sidebar.image(img, use_column_width=True)
+def sidebar():
+    st.sidebar.image(img, use_column_width=True)
 
-st.sidebar.write("Send us some [feedback](https://docs.google.com/forms/d/e/1FAIpQLSeW1-wPirsWOBxF8VSJUxIGd1bM9BnT55cX5EXK6atmzAO3Hw/viewform?usp=sf_link)!")
+    st.sidebar.write("Send us some [feedback](https://docs.google.com/forms/d/e/1FAIpQLSeW1-wPirsWOBxF8VSJUxIGd1bM9BnT55cX5EXK6atmzAO3Hw/viewform?usp=sf_link)!")
 
-option = st.selectbox(\
-    'Which coin would you like to view', ['Aave','BinanceCoin','Bitcoin','Cardano','ChainLink','Cosmos','Dogecoin','EOS'])
+    global option
+    option = st.sidebar.selectbox(\
+        'Select Coin:', ['Aave','BinanceCoin','Bitcoin','Cardano','ChainLink','Cosmos','Dogecoin','EOS'])
 
-'You selected: ', option
+    st.sidebar.markdown("""
+**Goal:** Our goal is to help users understand cryptocurrency trends relating to price and media/Reddit sentiment through visualizations in order to assist in decision-making for investment portfolios.
 
-option1 = st.selectbox(\
-    'Date range (years)', [0.5,1,2,3,4,5])
-'You selected: ', option1
+**Intended Audience:** The intended audience is both professional and amateur cryptocurrency investors who wish to use these metrics and data to refine their portfolios. A secondary audience would be financial or economic researchers who wish to use this information to assist their analysis of the market. 
+
+**Data sources:** Cryptoreview.ai and Nomics.api
+    """)
+    return option
 
 
-coin = option
-trial = 'coins/coin_'+coin+'.csv'
-df = pd.read_csv(trial)
-df = df.tail(int(364 * option1))
+# trial = 'coins/coin_'+coin+'.csv'
+# df = pd.read_csv(trial)
+# df = df.tail(int(364 * option1))
 
 def display_chart_0():
     nearest = alt.selection(type='single', nearest=True, on='mouseover',
@@ -211,7 +221,7 @@ def display_chart_2():
     )
 
     all = rule + bar
-    st.altair_chart(all.add_selection(token_selector).transform_filter(token_selector).interactive())
+    st.altair_chart(all.add_selection(token_selector).transform_filter(token_selector).interactive(), use_container_width=True)
 
 def display_chart_3():
     #test which one they like better: drop down or bar plot with token names
@@ -394,12 +404,8 @@ def display_chart_7():
     st.altair_chart(both.add_selection(token_selector).transform_filter(token_selector).interactive())
 
 if __name__ == "__main__":
-    display_chart_0()
-    display_chart_1()
+    coin = sidebar()
     display_chart_2()
-    display_chart_3()
-    display_chart_4()
     display_chart_5()
-    display_chart_6()
     display_chart_7()
     
