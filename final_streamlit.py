@@ -165,6 +165,9 @@ def VIZ_TIME_BABY():
 if __name__ == "__main__":
     startup()
     sidebar()
-    startup_api_load_data()
-    coin_metadata()
-    VIZ_TIME_BABY()
+    try:
+        startup_api_load_data()
+        coin_metadata()
+        VIZ_TIME_BABY()
+    except ValueError:
+        st.write("OOPS! Our api only allows us one call per second.  Someone else must be using the site. Give it a moment and try again.")
