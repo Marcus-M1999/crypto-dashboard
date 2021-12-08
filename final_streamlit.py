@@ -10,8 +10,6 @@ from PIL import Image
 import time
 import requests
 from stream_helper import *
-# from fbprophet import Prophet
-import matplotlib.pyplot as plt
 from W209_final_midterm_viz import *
 
 
