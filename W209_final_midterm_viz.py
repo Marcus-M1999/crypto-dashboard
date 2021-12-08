@@ -11,9 +11,9 @@ import altair as alt
 
 # from fbprophet import Prophet
 import matplotlib.pyplot as plt
+import streamlit as st
 
-
-key = "266dbf914fd18fad344fcf6e0937362695777573"
+key = st.secrets['nomics-key']['key']
 nomics = Nomics(key)
 
 
