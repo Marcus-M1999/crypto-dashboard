@@ -74,7 +74,7 @@ def startup_api_load_data():
     global currencies
     global ytd
     # nomics api call
-    key = st.secret["nomics-key"]["key"]
+    key = st.secrets["nomics-key"]["key"]
     nomics = Nomics(key)
     markets = nomics.ExchangeRates.get_history(currency = coin, start = '2015-10-02T15:00:00.05Z')
 
