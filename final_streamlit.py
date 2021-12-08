@@ -76,9 +76,7 @@ def startup_api_load_data():
     global currencies
     global ytd
     # nomics api call
-    key = "266dbf914fd18fad344fcf6e0937362695777573"
-    nomics = Nomics(key)
-    markets = nomics.ExchangeRates.get_history(currency = coin, start = '2015-10-02T15:00:00.05Z')
+
 
     #NOTE: we must sleep for 1 sewcond after each API call bc we are only allowd one call per second
 
