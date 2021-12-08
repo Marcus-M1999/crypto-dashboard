@@ -6,7 +6,7 @@ import numpy as np
 import altair as alt
 import streamlit.components.v1 as components
 from PIL import Image
-from nomics import Nomics
+#from nomics import Nomics
 import time
 import requests
 from stream_helper import *
