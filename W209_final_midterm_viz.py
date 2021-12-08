@@ -9,8 +9,6 @@ from datetime import datetime
 import numpy as np
 import altair as alt
 
-# from fbprophet import Prophet
-import matplotlib.pyplot as plt
 import streamlit as st
 
 key = st.secrets['nomics-key']['key']
