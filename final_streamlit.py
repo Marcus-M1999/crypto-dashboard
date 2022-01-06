@@ -6,12 +6,10 @@ import numpy as np
 import altair as alt
 import streamlit.components.v1 as components
 from PIL import Image
-from nomics import Nomics
+#from nomics import Nomics
 import time
 import requests
 from stream_helper import *
-# from fbprophet import Prophet
-import matplotlib.pyplot as plt
 from W209_final_midterm_viz import *
 
 
@@ -76,7 +74,7 @@ def startup_api_load_data():
     global currencies
     global ytd
     # nomics api call
-    key = "266dbf914fd18fad344fcf6e0937362695777573"
+    key = st.secrets["nomics-key"]["key"]
     nomics = Nomics(key)
     markets = nomics.ExchangeRates.get_history(currency = coin, start = '2015-10-02T15:00:00.05Z')
 
@@ -167,6 +165,9 @@ def VIZ_TIME_BABY():
 if __name__ == "__main__":
     startup()
     sidebar()
-    startup_api_load_data()
-    coin_metadata()
-    VIZ_TIME_BABY()
+    try:
+        startup_api_load_data()
+        coin_metadata()
+        VIZ_TIME_BABY()
+    except ValueError:
+        st.write("OOPS! Our api only allows us one call per second.  Someone else must be using the site. Give it a moment and try again.")
