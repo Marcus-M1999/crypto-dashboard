@@ -8,7 +8,7 @@ from datetime import timezone
 from datetime import datetime
 import numpy as np
 import altair as alt
-import tensorflow as tf
+#import tensorflow as tf
 from fbprophet import prophet
 import matplotlib.pyplot as plt
 
