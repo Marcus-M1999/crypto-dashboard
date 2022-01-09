@@ -6,6 +6,7 @@ from nomics import Nomics
 import pandas as pd
 from datetime import timezone
 from datetime import datetime
+from datetime import date
 import numpy as np
 import altair as alt
 #import tensorflow as tf
@@ -282,12 +283,13 @@ def create_forecasting_chart(df):
   #helper fcn to
      def get_prophet_data(df):
         crypto_prophet = Prophet()
+        valid_date = (datetime.datetime.now() - datetime.timedelta(60))
 
         experiment_df = pd.DataFrame({})
         experiment_df['ds'] = pd.to_datetime(df['timestamp']).dt.date
         experiment_df['y'] = df['rate'].astype(float)
-        train_data = experiment_df[pd.to_datetime(experiment_df['ds']) <= '2021-10-01']
-        valid_data = experiment_df[pd.to_datetime(experiment_df['ds']) > '2021-10-01']
+        train_data = experiment_df[pd.to_datetime(experiment_df['ds']) <= valid_date]
+        valid_data = experiment_df[pd.to_datetime(experiment_df['ds']) > valid_date]
 
         # Fit the model on the time series.
         m_prophet = crypto_prophet.fit(train_data)
