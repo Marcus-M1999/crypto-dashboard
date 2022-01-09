@@ -307,34 +307,33 @@ def create_forecasting_chart(df):
 
         return prophet_forecast
 
-  prophet_forecast = get_prophet_data(df)
+    prophet_forecast = get_prophet_data(df)
 
-  difference = alt.condition("datum.yhat > datum.y",
+    difference = alt.condition("datum.yhat > datum.y",
                                       alt.value("#06982d"),
                                       alt.value("#ae1325"))
 
-  diff2= alt.condition("datum.yhat > datum.y",
+    diff2= alt.condition("datum.yhat > datum.y",
                                       alt.value("#06982d"),
                                       alt.value("#ae1325"))
 
-  base = alt.Chart(prophet_forecast).encode(
-      x=alt.X('ds:T', title='Date')
-
+    base = alt.Chart(prophet_forecast).encode(
+        x=alt.X('ds:T', title='Date')
       )
 
 
-  bar = base.mark_bar().encode(
+    bar = base.mark_bar().encode(
       alt.Y('y:Q'),
       alt.Y2('yhat:Q'), color = difference)
 
-  area = base.mark_area(opacity = 0.2, color='steelblue').encode(
+    area = base.mark_area(opacity = 0.2, color='steelblue').encode(
       alt.Y('yhat_upper:Q'),
       alt.Y2('yhat_lower:Q'))
 
-  line = base.mark_line(color='black').encode(
+    line = base.mark_line(color='black').encode(
       alt.Y('midpoint:Q')
-  )
+    )
 
 
-  all = bar + area + line
-  return all.properties(width=750, height=500).interactive()
+    all = bar + area + line
+    return all.properties(width=750, height=500).interactive()
