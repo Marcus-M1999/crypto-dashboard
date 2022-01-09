@@ -285,7 +285,7 @@ def create_forecasting_chart(df):
 
         experiment_df = pd.DataFrame({})
         experiment_df['ds'] = pd.to_datetime(df['timestamp']).dt.date
-        experiment_df['y'] = df['rate']
+        experiment_df['y'] = df['rate'].astype(float)
         train_data = experiment_df[pd.to_datetime(experiment_df['ds']) <= '2021-10-01']
         valid_data = experiment_df[pd.to_datetime(experiment_df['ds']) > '2021-10-01']
 
