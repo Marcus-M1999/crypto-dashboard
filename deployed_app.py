@@ -101,7 +101,7 @@ def startup_api_load_data():
 
     df = load_data(df)
     ytd = load_data(ytd)
-    reddit = pd.read_csv('data_for_viz_project_dec052021.csv')
+    reddit = pd.read_csv('data_for_viz_project.csv')
     currencies  = nomics.Currencies.get_currencies(coin)
     currencies = pd.DataFrame(currencies)
 
