@@ -8,6 +8,9 @@ from datetime import timezone
 from datetime import datetime
 import numpy as np
 import altair as alt
+import tensorflow as tf
+from fbprophet import prophet
+import matplotlib.pyplot as plt
 
 import streamlit as st
 
@@ -264,3 +267,74 @@ def reddit_posts_and_price(price, reddit, token):
         )
 
     return chart.properties(height=500, title='Currency Price in Relation to Number of Reddit Posts Over Time. NOTE: Only YTD Data').interactive()
+
+
+
+
+#Forecasts coin data in prophet
+#takes in dataframe in form of pandas df
+#creates Forecasting chart, calls get_prophet_data
+#takes in df- dataframe
+def create_forecasting_chart(df):
+
+  #Forecasts coin data in prophet
+  #takes in dataframe in form of pandas df
+  #helper fcn to
+     def get_prophet_data(df):
+        crypto_prophet = Prophet()
+
+        experiment_df = pd.DataFrame({})
+        experiment_df['ds'] = pd.to_datetime(df['timestamp']).dt.date
+        experiment_df['y'] = df['rate']
+        train_data = experiment_df[pd.to_datetime(experiment_df['ds']) <= '2021-10-01']
+        valid_data = experiment_df[pd.to_datetime(experiment_df['ds']) > '2021-10-01']
+
+        # Fit the model on the time series.
+        m_prophet = crypto_prophet.fit(train_data)
+
+        # Create a DataFrame of future dates to create forecasts for.
+        future_prophet = crypto_prophet.make_future_dataframe(periods = 30)
+
+        # Create forecast
+        prophet_forecast = crypto_prophet.predict(future_prophet)
+
+        #create data
+        prophet_forecast['y'] = experiment_df['y']
+        prophet_forecast['low'] = prophet_forecast.loc[:,'yhat':'y'].min(axis=1)
+        prophet_forecast['high'] = prophet_forecast.loc[:,'yhat':'y'].max(axis=1)
+        prophet_forecast['error'] = prophet_forecast['yhat_upper'] - prophet_forecast['yhat_lower']
+        prophet_forecast['midpoint'] = prophet_forecast['low'] + abs((prophet_forecast['y'] - prophet_forecast['yhat']) / 2)
+
+        return prophet_forecast
+
+  prophet_forecast = get_prophet_data(df)
+
+  difference = alt.condition("datum.yhat > datum.y",
+                                      alt.value("#06982d"),
+                                      alt.value("#ae1325"))
+
+  diff2= alt.condition("datum.yhat > datum.y",
+                                      alt.value("#06982d"),
+                                      alt.value("#ae1325"))
+
+  base = alt.Chart(prophet_forecast).encode(
+      x=alt.X('ds:T', title='Date')
+
+      )
+
+
+  bar = base.mark_bar().encode(
+      alt.Y('y:Q'),
+      alt.Y2('yhat:Q'), color = difference)
+
+  area = base.mark_area(opacity = 0.2, color='steelblue').encode(
+      alt.Y('yhat_upper:Q'),
+      alt.Y2('yhat_lower:Q'))
+
+  line = base.mark_line(color='black').encode(
+      alt.Y('midpoint:Q')
+  )
+
+
+  all = bar + area + line
+  return all.properties(width=750, height=500).interactive()

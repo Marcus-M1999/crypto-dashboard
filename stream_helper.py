@@ -10,6 +10,7 @@ from PIL import Image
 from nomics import Nomics
 import time
 import requests
+from fbprophet import Prophet
 
 
 
