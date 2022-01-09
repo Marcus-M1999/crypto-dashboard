@@ -304,6 +304,8 @@ def create_forecasting_chart(df):
         prophet_forecast['high'] = prophet_forecast.loc[:,'yhat':'y'].max(axis=1)
         prophet_forecast['error'] = prophet_forecast['yhat_upper'] - prophet_forecast['yhat_lower']
         prophet_forecast['midpoint'] = prophet_forecast['low'] + abs((prophet_forecast['y'] - prophet_forecast['yhat']) / 2)
+        for i in ['y', 'yhat', 'low', 'high', 'midpoint']:
+            prophet_forecast[i] = prophet_forecast[i].where(prophet_forecast[i] >= 0, 0)
 
         return prophet_forecast
 
