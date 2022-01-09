@@ -283,7 +283,7 @@ def create_forecasting_chart(df):
   #helper fcn to
      def get_prophet_data(df):
         crypto_prophet = Prophet()
-        valid_date = (datetime.datetime.now() - datetime.timedelta(60))
+        valid_date = (datetime.datetime.utcnow() - datetime.timedelta(60))
 
         experiment_df = pd.DataFrame({})
         experiment_df['ds'] = pd.to_datetime(df['timestamp']).dt.date
