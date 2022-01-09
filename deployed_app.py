@@ -33,7 +33,8 @@ def startup():
 
     #currencies our app supports
     global currencies_name
-    currencies_name = ['ADA', 'BCH', 'BSV', 'BTC', 'DOGE', 'ETH', 'LTC', 'TRX', 'XRP', ]
+    currencies_name = ['BTC', 'ETH', 'TRX',]
+    #['ADA', 'BCH', 'BSV', 'BTC', 'DOGE', 'ETH', 'LTC', 'TRX', 'XRP', ]
 
 
 def sidebar():
