@@ -146,7 +146,7 @@ def VIZ_TIME_BABY():
     ra1,ra2 = rolling_avg_std(df)
     reddit_chart = reddit_posts_and_price(ytd,reddit,coin)
     percent = percent_change(df)
-    forecast = create_forecasting_chart(df)
+    forecast = create_forecasting_chart(forecast_df)
 
 
     #wide candlestick_chart
