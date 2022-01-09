@@ -9,7 +9,7 @@ from datetime import datetime
 import numpy as np
 import altair as alt
 #import tensorflow as tf
-from fbprophet import prophet
+from fbprophet import *
 import matplotlib.pyplot as plt
 
 import streamlit as st
