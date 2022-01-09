@@ -5,13 +5,13 @@ from datetime import datetime
 import numpy as np
 import altair as alt
 import streamlit.components.v1 as components
-from PIL import Image
+#from PIL import Image
 #from nomics import Nomics
 import time
 import requests
 from stream_helper import *
 from W209_final_midterm_viz import *
-from fbprophet import Prophet
+#from fbprophet import Prophet
 
 
 
