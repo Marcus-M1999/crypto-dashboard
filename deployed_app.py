@@ -87,6 +87,7 @@ def startup_api_load_data():
     df = pd.DataFrame(markets)
 
     #will need to change on new year
+    print(df.head())
     ytd = df[df['timestamp']>'2022']
     if option1 == 'YTD':
         df = ytd.copy()
