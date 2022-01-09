@@ -73,6 +73,7 @@ def startup_api_load_data():
     currencies: metadata of coin ( volume, price, img etc)
     """
     global df
+    global forecast_df
     global reddit
     global currencies
     global ytd
