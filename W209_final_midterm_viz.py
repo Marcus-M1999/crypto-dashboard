@@ -4,6 +4,7 @@
 
 from nomics import Nomics
 import pandas as pd
+import datetime as dt1
 from datetime import timezone
 from datetime import datetime
 from datetime import date
@@ -283,8 +284,8 @@ def create_forecasting_chart(df):
   #helper fcn to
      def get_prophet_data(df):
         crypto_prophet = Prophet()
-        valid_date = (datetime.utcnow() - datetime.timedelta(60))
-        
+        valid_date = (datetime.utcnow() - dt1.timedelta(60))
+
 
         experiment_df = pd.DataFrame({})
         experiment_df['ds'] = pd.to_datetime(df['timestamp']).dt.date
