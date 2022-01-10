@@ -284,20 +284,15 @@ def create_forecasting_chart(df):
   #helper fcn to
      def get_prophet_data(df):
         crypto_prophet = Prophet()
-        valid_date = (datetime.utcnow() - dt1.timedelta(60))
-
 
         experiment_df = pd.DataFrame({})
         experiment_df['ds'] = pd.to_datetime(df['timestamp']).dt.date
         experiment_df['y'] = df['rate'].astype(float)
-        train_data = experiment_df[pd.to_datetime(experiment_df['ds']) <= valid_date]
-        valid_data = experiment_df[pd.to_datetime(experiment_df['ds']) > valid_date]
 
-        # Fit the model on the time series.
-        m_prophet = crypto_prophet.fit(train_data)
+        m_prophet = crypto_prophet.fit(experiment_df)
 
         # Create a DataFrame of future dates to create forecasts for.
-        future_prophet = crypto_prophet.make_future_dataframe(periods = 30)
+        future_prophet = crypto_prophet.make_future_dataframe(periods = 5)
 
         # Create forecast
         prophet_forecast = crypto_prophet.predict(future_prophet)
