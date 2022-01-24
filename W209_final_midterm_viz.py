@@ -268,7 +268,7 @@ def reddit_posts_and_price(price, reddit, token):
             tooltip=['Date:T', 'close:Q']
         )
 
-    return chart.properties(height=500, title='Currency Price in Relation to Number of Reddit Posts Over Time. NOTE: Only YTD Data').interactive()
+    return chart.properties(height=500, title='Currency Price in Relation to Number of Reddit Posts Over Time. NOTE: Only YTD Data (updates in progess)').interactive()
 
 
 
@@ -342,4 +342,5 @@ def create_forecasting_chart(df):
 
 
      all = bar + area + prediction + actual
-     return all.properties(width=750, height=500).interactive()
+     return all.properties(width=750, height=500, title={'text': 'Time Series Forecasting of cryptocurrency, NOTE: Data Streaming still in progress',
+     'subtitle': ['Red indicates a higher predicted value and green indicates a higher predicted value compared to the actual value']}).interactive()
