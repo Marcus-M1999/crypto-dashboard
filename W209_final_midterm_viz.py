@@ -337,7 +337,7 @@ def create_forecasting_chart(df):
       )
 
      actual = base.mark_line(color='blue').encode(
-          alt.Y('y:Q')
+          alt.Y('y:Q', title='Price')
       )
 
 
